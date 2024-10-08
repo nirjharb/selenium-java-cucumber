@@ -1,11 +1,14 @@
 package runner;
 
+import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
+import org.junit.runner.RunWith;
 
+@RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"src/test/java/features"}, // Path to your feature files
-        glue = {"src/test/java/stepDefinition"}, // Path to your step definition files
-        plugin = {"pretty", "target/cucumber-reports/cucumber.html"}, // Report generation
+        glue = {"utility", "stepDefinition"}, // Path to your step definition files
+        plugin = {"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"}, // Allure Report generation
         monochrome = true,
         tags = "@login"
 )

@@ -20,26 +20,25 @@ Feature: Login functionality of OrangeHRM
     Given I enter an invalid username "InvalidUser"
     And I enter an invalid password "InvalidPass123"
     When I click on the "Login" button
-    Then I should see an error message "Invalid credentials"
+    Then I should see a validation message "Invalid credentials"
 
-#  @login
-#  Scenario: Login with blank username and password
-#    Given I leave the username field blank
-#    And I leave the password field blank
-#    When I click on the "Login" button
-#    Then I should see an error message "Username cannot be empty"
-#    And I should see an error message "Password cannot be empty"
-#
-#  @login
-#  Scenario: Login with blank username and valid password
-#    Given I leave the username field blank
-#    And I enter a valid password "admin123"
-#    When I click on the "Login" button
-#    Then I should see an error message "Username cannot be empty"
-#
-#  @login
-#  Scenario: Login with valid username and blank password
-#    Given I enter a valid username "Admin"
-#    And I leave the password field blank
-#    When I click on the "Login" button
-#    Then I should see an error message "Password cannot be empty"
+  @login
+  Scenario: Login with blank username and password
+    Given I leave the username field blank
+    And I leave the password field blank
+    When I click on the "Login" button
+    Then I should see a validation message "Required"
+
+  @login
+  Scenario: Login with blank username and valid password
+    Given I leave the username field blank
+    And I enter a valid password "admin123"
+    When I click on the "Login" button
+    Then I should see a validation message "Required"
+
+  @login
+  Scenario: Login with valid username and blank password
+    Given I enter a valid username "Admin"
+    And I leave the password field blank
+    When I click on the "Login" button
+    Then I should see a validation message "Required"

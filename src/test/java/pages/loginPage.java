@@ -1,10 +1,12 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class loginPage {
@@ -12,10 +14,12 @@ public class loginPage {
     WebDriver driver;
 
     // Locators for the login page
-    private By usernameField = By.cssSelector("input[placeholder='username']");
-    private By passwordField = By.cssSelector("input[placeholder='password']");
-    private By loginButton = By.cssSelector("button[type='submit']");
-    private By errorMessage = By.xpath("//p[text()='Invalid credentials']");
+    By usernameField = By.cssSelector("input[name='username']");
+    By passwordField = By.cssSelector("input[name='password']");
+    By loginButton = By.cssSelector("button[type='submit']");
+    By invalidCredMessage = By.cssSelector("div[role='alert']");
+    By requiredText1 = By.xpath("//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']");
+    By requiredText2 = By.xpath("//div[@class='orangehrm-login-form']//div[2]//div[1]//span[1]");
 
     // Constructor to initialize WebDriver and the page elements
     public loginPage(WebDriver driver) {
@@ -43,9 +47,21 @@ public class loginPage {
         driver.findElement(loginButton).click();
     }
 
-    // Method to get the error message text
     public String getErrorMessage() {
-        return driver.findElement(errorMessage).getText();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(invalidCredMessage));
+            return driver.findElement(invalidCredMessage).getText();
+        } catch (TimeoutException e1) {
+            try {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(requiredText1));
+                return driver.findElement(requiredText1).getText();
+            } catch (TimeoutException e2) {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(requiredText2));
+                return driver.findElement(requiredText2).getText();
+            }
+        }
     }
 
     // Method to wait for the login page to load completely

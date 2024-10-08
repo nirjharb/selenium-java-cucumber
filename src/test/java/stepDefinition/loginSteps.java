@@ -29,7 +29,7 @@ public class loginSteps {
         loginPage = new loginPage(driver);
 
         // Open the OrangeHRM login page
-        loginPage.openLoginPage("https://opensource-demo.orangehrmlive.com/auth/login");
+        loginPage.openLoginPage("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
         // Wait for the page to load
         loginPage.waitForLoginPageToLoad();
@@ -88,8 +88,8 @@ public class loginSteps {
         Assert.assertTrue(Objects.requireNonNull(driver.getPageSource()).contains(message), "Welcome message is not displayed.");
     }
 
-    @Then("I should see an error message {string}")
-    public void i_should_see_an_error_message(String expectedMessage) {
+    @Then("I should see a validation message {string}")
+    public void i_should_see_validation_message(String expectedMessage) {
 
         // Validate if the error message matches the expected message
         String actualErrorMessage = loginPage.getErrorMessage();
